@@ -14,6 +14,6 @@ book_data = JSON.parse(api_data)["items"]
     Book.create(
         name: book["title"],
         author_name: book["authors"] ? book["authors"][0] : "None",
-        img_url: book["imageLinks"]["thumbnail"]
+        img_url: book["imageLinks"] ? book["imageLinks"]["thumbnail"] : "none"
     )
 end
