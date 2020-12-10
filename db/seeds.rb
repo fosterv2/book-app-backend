@@ -6,14 +6,15 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-api_data = RestClient.get('https://www.googleapis.com/books/v1/volumes?q=bundo')
+api_data = RestClient.get('https://www.googleapis.com/books/v1/volumes?q=inauthor:madeleine+l%27engle')
 book_data = JSON.parse(api_data)["items"]
 
-10.times do
-    book = book_data.shift["volumeInfo"]
+book_data.each do |bk|
+    book = bk["volumeInfo"]
     Book.create(
-        name: book["title"],
+        title: book["title"],
         author_name: book["authors"] ? book["authors"][0] : "None",
-        img_url: book["imageLinks"] ? book["imageLinks"]["thumbnail"] : "none"
+        img_url: book["imageLinks"] ? book["imageLinks"]["thumbnail"] : "none",
+        blurb: book["description"]
     )
 end
