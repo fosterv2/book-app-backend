@@ -1,11 +1,4 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the rails db:seed command (or created alongside the database with db:setup).
-#
-# Examples:
-#
-#   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
-#   Character.create(name: 'Luke', movie: movies.first)
-
+# Books
 api_data_1 = RestClient.get('https://www.googleapis.com/books/v1/volumes?q=inauthor:madeleine+l%27engle')
 book_data = JSON.parse(api_data_1)["items"]
 api_data_2 = RestClient.get('https://www.googleapis.com/books/v1/volumes?q=inauthor:rowling')
@@ -23,6 +16,7 @@ book_data.each do |bk|
     )
 end
 
+# Users
 10.times do
     name = Faker::Name.name
     User.create(
@@ -31,3 +25,51 @@ end
         password: Faker::Internet.password
     )
 end
+
+# Reviews
+10.times do
+    Review.create(
+        rating: 5,
+        content: "Good book",
+        user: User.all.sample,
+        book: Book.all.sample
+    )
+end
+
+15.times do
+    Review.create(
+        rating: 4,
+        content: "Decent book, I enjoyed it.",
+        user: User.all.sample,
+        book: Book.all.sample
+    )
+end
+
+12.times do
+    Review.create(
+        rating: 3,
+        content: "It was okay",
+        user: User.all.sample,
+        book: Book.all.sample
+    )
+end
+
+5.times do
+    Review.create(
+        rating: 2,
+        content: "I didn't like it, but I could see how some people might.",
+        user: User.all.sample,
+        book: Book.all.sample
+    )
+end
+
+8.times do
+    Review.create(
+        rating: 1,
+        content: "Disappointing",
+        user: User.all.sample,
+        book: Book.all.sample
+    )
+end
+
+puts "SEEDED!"
