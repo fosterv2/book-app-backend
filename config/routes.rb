@@ -1,6 +1,11 @@
 Rails.application.routes.draw do
   resources :reviews, only: [:create, :update, :destroy]
+  get '/reviews/:book_id', to: 'reviews#index'
+
   resources :books, only: [:index, :create, :update, :destroy]
+
   resources :users, only: [:show, :create, :update, :destroy]
-  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
+
+  post '/auth', to: 'auth#create'
+  get '/auth', to: 'auth#show'
 end
