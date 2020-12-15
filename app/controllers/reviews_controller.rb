@@ -1,7 +1,7 @@
 class ReviewsController < ApplicationController
     def index
         reviews = Review.where("book_id = ?", params[:book_id])
-        render json: reviews.to_json(except: [:created_at, :updated_at])
+        render json: reviews.to_json(include: [:user], except: [updated_at])
     end
 
     def create

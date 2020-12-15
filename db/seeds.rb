@@ -30,7 +30,8 @@ end
 10.times do
     Review.create(
         rating: 5,
-        content: "Good book",
+        title: "Good book",
+        content: "",
         user: User.all.sample,
         book: Book.all.sample
     )
@@ -39,7 +40,8 @@ end
 15.times do
     Review.create(
         rating: 4,
-        content: "Decent book, I enjoyed it.",
+        title: "Decent book, I enjoyed it.",
+        content: "",
         user: User.all.sample,
         book: Book.all.sample
     )
@@ -48,7 +50,8 @@ end
 12.times do
     Review.create(
         rating: 3,
-        content: "It was okay",
+        title: "It was okay",
+        content: "",
         user: User.all.sample,
         book: Book.all.sample
     )
@@ -57,7 +60,8 @@ end
 5.times do
     Review.create(
         rating: 2,
-        content: "I didn't like it, but I could see how some people might.",
+        title: "Didn't like it, but some people might.",
+        content: "",
         user: User.all.sample,
         book: Book.all.sample
     )
@@ -66,7 +70,8 @@ end
 8.times do
     Review.create(
         rating: 1,
-        content: "Disappointing",
+        title: "Disappointing",
+        content: "",
         user: User.all.sample,
         book: Book.all.sample
     )
