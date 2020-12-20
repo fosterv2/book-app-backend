@@ -1,7 +1,7 @@
 class ReviewsController < ApplicationController
     def index
         reviews = Review.where("book_id = ?", params[:book_id])
-        render json: reviews.to_json(include: [:user], except: [updated_at])
+        render json: reviews.to_json(include: [:user], except: [:updated_at])
     end
 
     def create
@@ -23,6 +23,6 @@ class ReviewsController < ApplicationController
     private
 
     def set_params
-        params.require(:review).permit(:content, :rating, :user_id, :book_id)
+        params.require(:review).permit(:title, :content, :rating, :user_id, :book_id)
     end
 end
