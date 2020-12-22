@@ -45,3 +45,5 @@ gem 'faker'
 gem 'rest-client'
 
 gem 'jwt'
+
+gem 'active_model_serializers'
