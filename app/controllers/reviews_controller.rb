@@ -6,13 +6,13 @@ class ReviewsController < ApplicationController
 
     def create
         review = Review.create(set_params)
-        render json: review.to_json(except: [:created_at, :updated_at])
+        render json: review.to_json(include: [:user], except: [:created_at, :updated_at])
     end
 
     def update
         review = Review.find(params[:id])
         review.update(set_params)
-        render json: review.to_json(except: [:created_at, :updated_at])
+        render json: review.to_json(include: [:user], except: [:created_at, :updated_at])
     end
 
     def destroy
