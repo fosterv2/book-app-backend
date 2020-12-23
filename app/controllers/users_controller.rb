@@ -1,11 +1,13 @@
 class UsersController < ApplicationController
-    # def show
-    # need to do auth
-    # end
-
     def create
-        user = User.create(set_params)
-        render json: user.to_json(except: [:created_at, :updated_at])
+        user = User.create(name: params[:name], username: params[:username], password: params[:password],
+            password_confirmation: params[:password_confirmation]) # should find out how to use set_params
+        if user.valid?
+            token = encode_token({ user_id: user.id })
+            render json: { user: UserSerializer.new(user), jwt: token }
+        else
+            render json: { error: 'failed to create user' }, status: :not_acceptable
+        end
     end
 
     def update
@@ -14,14 +16,9 @@ class UsersController < ApplicationController
         render json: user.to_json(except: [:created_at, :updated_at])
     end
 
-    # def destroy
-    #     user = User.find(params[:id])
-    #     user.destroy
-    # end
-
     private
 
     def set_params
-        params.require(:user).permit(:name, :username, :password)
+        params.require(:user).permit(:name, :username, :password, :password_confirmation)
     end
 end
