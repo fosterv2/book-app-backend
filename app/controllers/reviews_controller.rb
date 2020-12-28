@@ -5,14 +5,26 @@ class ReviewsController < ApplicationController
     end
 
     def create
-        review = Review.create(set_params)
-        render json: review.to_json(include: [:user], except: [:created_at, :updated_at])
+        review = Review.new(set_params)
+        set_title(review)
+        review.save
+        if review.valid?
+            render json: review.to_json(include: [:user], except: [:created_at, :updated_at])
+        else
+            render json: { error: 'review is invalid' }, status: :not_acceptable
+        end
     end
 
     def update
         review = Review.find(params[:id])
         review.update(set_params)
-        render json: review.to_json(include: [:user], except: [:created_at, :updated_at])
+        set_title(review)
+        review.save
+        if review.valid?
+            render json: review.to_json(include: [:user], except: [:created_at, :updated_at])
+        else
+            render json: { error: 'review is invalid' }, status: :not_acceptable
+        end
     end
 
     def destroy
@@ -24,5 +36,11 @@ class ReviewsController < ApplicationController
 
     def set_params
         params.require(:review).permit(:title, :content, :rating, :user_id, :book_id)
+    end
+
+    def set_title(review)
+        if review.title == ""
+            review.title = review.content.truncate(25)
+        end
     end
 end
