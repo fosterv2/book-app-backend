@@ -1,7 +1,7 @@
 class ReviewsController < ApplicationController
     def index
         reviews = Review.where("book_id = ?", params[:book_id])
-        render json: reviews.to_json(include: [:user], except: [:updated_at])
+        render json: reviews.to_json(include: [:user], except: [:user_id, :updated_at])
     end
 
     def create
@@ -9,7 +9,7 @@ class ReviewsController < ApplicationController
         set_title(review)
         review.save
         if review.valid?
-            render json: review.to_json(include: [:user], except: [:created_at, :updated_at])
+            render json: review.to_json(include: [:user], except: [:user_id, :updated_at])
         else
             render json: { error: 'review is invalid' }, status: :not_acceptable
         end
@@ -21,7 +21,7 @@ class ReviewsController < ApplicationController
         set_title(review)
         review.save
         if review.valid?
-            render json: review.to_json(include: [:user], except: [:created_at, :updated_at])
+            render json: review.to_json(include: [:user], except: [:user_id, :updated_at])
         else
             render json: { error: 'review is invalid' }, status: :not_acceptable
         end
